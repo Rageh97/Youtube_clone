@@ -1,14 +1,14 @@
 import { Avatar } from "@mui/material";
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 const VideoCard = ({ video }) => {
+
   return (
     <>
       <Col className="mb-4" xs={12} sm={12} md={6} lg={6} xl={4} xxl={4}>
-        <Card className="w-100 h-100">
-          <Link to={`/videos/${video?.id.videoId}`}>
+        <Card  className="w-100 h-100">
+          <Link to={`/videos/${video?.id}`}>
             <Card.Img
               variant="top"
               src={video?.snippet?.thumbnails?.default?.url}

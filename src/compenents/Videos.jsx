@@ -1,53 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
-import { Badge, Col, Container, Row } from "react-bootstrap";
-import axios from "axios";
+import { Badge, Col, Row } from "react-bootstrap";
+import { selectVideosStatus, selectVideos } from "../Redux/Slices/VideoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVideos } from "../Redux/Slices/VideoSlice";
+import Loading from './../Utils/Loading';
 
 const VideoList = () => {
-  const [videos, setVideos] = useState([]);
-
-  // const url =
-  //   "https://youtube-v31.p.rapidapi.com/search?q=music&part=snippet%2Cid&regionCode=US&maxResults=50&order=date";
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     "X-RapidAPI-Key": "b7d2ae626amshc2966c521430c77p110255jsn4e2578d3e4a1",
-  //     "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
-  //   },
-  // };
-  // useEffect(() => {
-  //   async function fetchVideos() {
-  //     const response = await fetch(url, options);
-  //     const data = await response.json();
-  //     console.log(data.items);
-  //     setVideos(data.items);
-  //   }
-
-  //   fetchVideos();
-  // }, []);
+  const videos = useSelector(selectVideos);
+  const status = useSelector(selectVideosStatus);
+  const dispatch = useDispatch();
   useEffect(() => {
-    // Fetch all videos
-    axios
-      .get("https://www.googleapis.com/youtube/v3/search", {
-        params: {
-          part: "snippet",
-          chart: "music",
-          maxResults: 10,
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
-        },
-      })
-      .then((response) => {
-        setVideos(response.data.items);
-        console.log(response.data.items);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(fetchVideos());
   }, []);
+
 
   return (
     <>
-      <Row style={{marginTop:"70px"}}>
+      <Row style={{ marginTop: "70px" }}>
         <Col className=" p-3  mb-3 ">
           <Badge className="p-2 me-3" pill bg="dark">
             videos
@@ -71,9 +41,16 @@ const VideoList = () => {
       </Row>
       <Row className="d-flex ">
         {videos.map((video) => (
-          
-            <VideoCard key={video.id} video={video} />
-          
+          <>
+            {status === "loading" ? (
+              <Loading />
+            ) : (
+              <>
+                {" "}
+                <VideoCard key={video.id} video={video} />
+              </>
+            )}
+          </>
         ))}
       </Row>
     </>

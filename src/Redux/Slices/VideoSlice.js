@@ -1,11 +1,12 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from "axios";
-// const initialState =  {
-//   videos: [],
-//   currentVideo: null,
-//   status: "idle",
-//   error: null,
-// }
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const initialState = {
+  videos: [],
+  currentVideo: null,
+  status: "idle",
+  error: null,
+};
 
 // const API_KEY = "b7d2ae626amshc2966c521430c77p110255jsn4e2578d3e4a1";
 
@@ -29,8 +30,6 @@
 //     thumbnailUrl: item.snippet.thumbnails.medium.url,
 //   }));
 // });
-
-
 
 // export const fetchVideoById = createAsyncThunk(
 //   "videos/fetchVideoById",
@@ -56,36 +55,71 @@
 //     };
 //   }
 // );
+export const fetchVideos = createAsyncThunk("videos/fetchVideos", async () => {
+  const response = await axios.get(
+    "https://www.googleapis.com/youtube/v3/videos",
+    {
+      params: {
+        part: "snippet",
+        chart: "mostPopular",
+        maxResults: 10,
+        key: "AIzaSyDjsSFMAXVvdT2TNej-XQAHOB6IzlwM3PQ",
+      },
+    }
+  );
+  return response.data.items;
+});
+export const fetchVideoById = createAsyncThunk(
+  "video/fetchvideoid",
+  async (id) => {
+    const response = await axios.get(
+      "https://www.googleapis.com/youtube/v3/videos",
+      {
+        params: {
+          part: "snippet",
+          id: id,
+          key: "AIzaSyDjsSFMAXVvdT2TNej-XQAHOB6IzlwM3PQ",
+        },
+      }
+    );
+    console.log(response.data.items[0]);
+    return response.data.items[0];
+  }
+);
 
-// const videosSlice = createSlice({
-//   name: "videos",
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchVideos.pending, (state) => {
-//         state.status = "loading";
-//       })
-//       .addCase(fetchVideos.fulfilled, (state, action) => {
-//         state.status = "succeeded";
-//         state.videos = action.payload;
-//       })
-//       .addCase(fetchVideos.rejected, (state, action) => {
-//         state.status = "failed";
-//         state.error = action.error.message;
-//       })
-//       .addCase(fetchVideoById.pending, (state) => {
-//         state.status = "loading";
-//       })
-//       .addCase(fetchVideoById.fulfilled, (state, action) => {
-//         state.status = "succeeded";
-//         state.currentVideo = action.payload;
-//       })
-//       .addCase(fetchVideoById.rejected, (state, action) => {
-//         state.status = "failed";
-//         state.error = action.error.message;
-//       });
-//   },
-// });
+const videosSlice = createSlice({
+  name: "videos",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchVideos.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchVideos.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.videos = action.payload;
+      })
+      .addCase(fetchVideos.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchVideoById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchVideoById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.currentVideo = action.payload;
+      })
+      .addCase(fetchVideoById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
 
-// export default videosSlice.reducer;
+export default videosSlice.reducer;
+export const selectVideos = (state) => state.videos.videos;
+export const selectVideosStatus = (state) => state.videos.status;
+export const selectVideosError = (state) => state.videos.error;
+export const singleVideo = (state) => state.videos.currentVideo;

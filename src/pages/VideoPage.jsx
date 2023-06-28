@@ -1,52 +1,47 @@
-import React, { useState, useEffect } from "react";
-import VideoCard from "../compenents/VideoCard";
+import React, {  useEffect } from "react";
+
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import RelatedVideo from "../compenents/RelatedVideo";
+
 import { Accordion, Button, Col, Container, Row } from "react-bootstrap";
 import { Avatar, Chip, Stack } from "@mui/material";
 import Comments from "../compenents/Comments";
 import { IoMdShareAlt } from "react-icons/io";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { selectVideosStatus, singleVideo } from "../Redux/Slices/VideoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVideoById } from "../Redux/Slices/VideoSlice";
+import Loading from './../Utils/Loading';
+import RelatedVideo from "../compenents/RelatedVideo"
 
 const VideoPage = () => {
-  const [video, setVideo] = useState(null);
-  
+  const currentVideo = useSelector(singleVideo);
+  const status = useSelector(selectVideosStatus)
   const { id } = useParams();
- 
+  const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get("https://www.googleapis.com/youtube/v3/videos", {
-        params: {
-          part: "snippet",
-          id: id,
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
-        },
-      })
-      .then((response) => {
-       
-        setVideo(response.data.items[0]);
-        setLikedVideos(response.data.items[0])
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
+    dispatch(fetchVideoById(id));
+  }, [dispatch, id]);
+ 
+ 
+
   return (
     <>
       <Container fluid style={{ marginTop: "90px" }}>
         <Row>
-          <Col xs={12} sm={12} md={12} lg={8} xl={8} xxl={8}>
+        {status === 'loading' ? <Loading/> : <>
+        
+        
+        <Col xs={12} sm={12} md={12} lg={8} xl={8} xxl={8}>
             <iframe
               className="w-100 rounded"
               style={{ height: "480px" }}
               src={`https://www.youtube.com/embed/${id}`}
-              title={video?.snippet?.title}
+              title={currentVideo?.snippet?.title}
               frameBorder="0"
               allow="autoplay; encrypted-media"
               allowFullScreen
             />
-            <h2 className="mt-2">{video?.snippet?.title}</h2>
+            <h2 className="mt-2">{currentVideo?.snippet?.title}</h2>
 
             {/* here the part of channel name and buttons that related for each video */}
             <Row className="mb-4 mt-2">
@@ -65,7 +60,9 @@ const VideoPage = () => {
                     src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                   />
                   <div className="d-flex flex-column">
-                    <p className="mb-0">{video?.snippet?.channelTitle}</p>
+                    <p className="mb-0">
+                      {currentVideo?.snippet?.channelTitle}
+                    </p>
                     <span className="mb-0">333 subscribe</span>
                   </div>
                 </div>
@@ -97,7 +94,7 @@ const VideoPage = () => {
                     }
                     label="like"
                   />
-                  
+
                   <Chip
                     avatar={
                       <Avatar>
@@ -116,11 +113,13 @@ const VideoPage = () => {
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>
                     <div>
-                      <p>View {video?.snippet?.publishTime}</p>
+                      <p>View {currentVideo?.snippet?.publishTime}</p>
                       <p>see description </p>
                     </div>
                   </Accordion.Header>
-                  <Accordion.Body>{video?.snippet?.description}</Accordion.Body>
+                  <Accordion.Body>
+                    {currentVideo?.snippet?.description}
+                  </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
             </Row>
@@ -130,16 +129,12 @@ const VideoPage = () => {
               <Comments />
             </Row>
           </Col>
+        </>}
           {/* here the part of related videos on the other side of the page */}
 
           <Col xs={12} sm={12} md={12} lg={4} xl={4} xxl={4}>
-            <RelatedVideo />
-            {/* <RelatedVideo />
-            <RelatedVideo />
-            <RelatedVideo />
-            <RelatedVideo />
-            <RelatedVideo />
-            <RelatedVideo /> */}
+       
+            <RelatedVideo/>
           </Col>
         </Row>
       </Container>

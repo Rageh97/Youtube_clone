@@ -1,11 +1,11 @@
-// // store.js
+import { configureStore } from "@reduxjs/toolkit";
+import videosReducer from "./Slices/VideoSlice";
+import relatedVideosReducer from "./Slices/RelatedVideos";
+const store = configureStore({
+  reducer: {
+    videos: videosReducer,
+    relatedVideos: relatedVideosReducer,
+  },
+});
 
-// import { configureStore } from '@reduxjs/toolkit';
-// import videosReducer from './Slices/VideoSlice';
-// const store = configureStore({
-//   reducer: {
-//     videos: videosReducer,
-//   },
-// });
-
-// export default store;
+export default store;
