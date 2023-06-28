@@ -4,15 +4,16 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import RelatedVideo from "../compenents/RelatedVideo";
 import { Accordion, Button, Col, Container, Row } from "react-bootstrap";
-import { Avatar, Chip, Divider, Stack } from "@mui/material";
+import { Avatar, Chip, Stack } from "@mui/material";
 import Comments from "../compenents/Comments";
 import { IoMdShareAlt } from "react-icons/io";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 const VideoPage = () => {
   const [video, setVideo] = useState(null);
+  
   const { id } = useParams();
-
+ 
   useEffect(() => {
     axios
       .get("https://www.googleapis.com/youtube/v3/videos", {
@@ -23,8 +24,9 @@ const VideoPage = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.items[0]);
+       
         setVideo(response.data.items[0]);
+        setLikedVideos(response.data.items[0])
       })
       .catch((error) => {
         console.log(error);
@@ -95,6 +97,7 @@ const VideoPage = () => {
                     }
                     label="like"
                   />
+                  
                   <Chip
                     avatar={
                       <Avatar>

@@ -26,10 +26,12 @@ function Sidebar() {
           <BsFillStopwatchFill className="fs-5" />
           <p className="mb-0">Watch later</p>
         </div>
-        <div className="d-flex align-items-center gap-2 mb-2 p-2 rounded sidebar-item">
-          <AiFillLike className="fs-5" />
-          <p className="mb-0">Videos I liked</p>
-        </div>
+        <Link className="text-dark" to={"/videos-i-liked"}>
+          <div className="d-flex align-items-center gap-2 mb-2 p-2 rounded sidebar-item">
+            <AiFillLike className="fs-5" />
+            <p className="mb-0">Videos I liked</p>
+          </div>
+        </Link>
         <hr />
 
         <ul>
