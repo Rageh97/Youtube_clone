@@ -3,11 +3,11 @@ import axios from "axios";
 
 const initialState = {
   videos: [],
+
   currentVideo: null,
   status: "idle",
   error: null,
 };
-
 
 export const fetchVideos = createAsyncThunk("videos/fetchVideos", async () => {
   const response = await axios.get(
@@ -22,8 +22,8 @@ export const fetchVideos = createAsyncThunk("videos/fetchVideos", async () => {
     }
   );
   return response.data.items;
-
 });
+
 export const fetchVideoById = createAsyncThunk(
   "video/fetchvideoid",
   async (id) => {
@@ -75,6 +75,7 @@ const videosSlice = createSlice({
 
 export default videosSlice.reducer;
 export const selectVideos = (state) => state.videos.videos;
+export const selectVideosCategory = (state) => state.videos.categoryVideos;
 export const selectVideosStatus = (state) => state.videos.status;
 export const selectVideosError = (state) => state.videos.error;
 export const singleVideo = (state) => state.videos.currentVideo;

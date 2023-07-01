@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   channelsInfo: [],
+
   channel: null,
   videos: [],
   status: "idle",
@@ -12,15 +13,14 @@ const initialState = {
 // fetch Channels
 export const fetchChannels = createAsyncThunk(
   "channels/fetchchannels",
-  async (channelname) => {
+  async (category) => {
     const response = await axios.get(
       "https://www.googleapis.com/youtube/v3/channels",
       {
         params: {
-          part: "snippet,brandingSettings, statistics",
+          part: "snippet",
+          forUsername: category,
           key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
-          maxResults: 10,
-          forUsername: channelname,
         },
       }
     );
@@ -73,6 +73,10 @@ const channelSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchChannels.fulfilled, (state, action) => {
+        state.channelsInfo = action.payload;
+      })
+
       .addCase(fetchChannelById.pending, (state) => {
         state.status = "loading";
       })
@@ -86,9 +90,6 @@ const channelSlice = createSlice({
       })
       .addCase(fetchVideosByChannel.fulfilled, (state, action) => {
         state.videos = action.payload;
-      })
-      .addCase(fetchChannels.fulfilled, (state, action) => {
-        state.channelsInfo = action.payload;
       });
   },
 });
@@ -96,3 +97,4 @@ export default channelSlice.reducer;
 export const getChannel = (state) => state.channels.channel;
 export const getVideosOfChannel = (state) => state.channels.videos;
 export const getChannels = (state) => state.channels.channelsInfo;
+export const getCategories = (state) => state.channels.categories;
