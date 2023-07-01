@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import { categories } from "../Utils/Constant";
 import { AiFillHome, AiFillLike } from "react-icons/ai";
@@ -6,7 +6,14 @@ import { MdSubscriptions } from "react-icons/md";
 import { BsFillStopwatchFill } from "react-icons/bs";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchChannels, getChannels } from "../Redux/Slices/ChannelSlice";
 function Sidebar() {
+  const dispatch = useDispatch();
+  // const channels = useSelector(getChannels);
+  // useEffect(() => {
+  //   dispatch(fetchChannels());
+  // }, []);
   return (
     <>
       <div className="sidebar">
@@ -22,10 +29,12 @@ function Sidebar() {
         </Link>
         <hr />
 
-        <div className="d-flex align-items-center gap-2 mb-2 p-2 rounded sidebar-item">
-          <BsFillStopwatchFill className="fs-5" />
-          <p className="mb-0">Watch later</p>
-        </div>
+        <Link className="text-dark" to={"/watch-later"}>
+          <div className="d-flex align-items-center gap-2 mb-2 p-2 rounded sidebar-item">
+            <BsFillStopwatchFill className="fs-5" />
+            <p className="mb-0">Watch later</p>
+          </div>
+        </Link>
         <Link className="text-dark" to={"/videos-i-liked"}>
           <div className="d-flex align-items-center gap-2 mb-2 p-2 rounded sidebar-item">
             <AiFillLike className="fs-5" />
@@ -45,7 +54,7 @@ function Sidebar() {
                     alt="Remy Sharp"
                     src="https://images.pexels.com/photos/130880/pexels-photo-130880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                   />
-                  <li>{category.name}</li>
+                  <li >{category.name}</li>
                 </div>
               </>
             );

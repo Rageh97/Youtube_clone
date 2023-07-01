@@ -12,6 +12,9 @@ import VideosILiked from "./pages/VideosILiked";
 import Register from "./pages/Register";
 import UserChannel from "./pages/UserChannel";
 import Setting from "./pages/Setting";
+import ChannelVideos from "./pages/ChannelVideos";
+import ChannelPlaylist from "./pages/ChannelPlaylist";
+import WatchLater from "./pages/WatchLater";
 
 function App() {
   return (
@@ -25,8 +28,10 @@ function App() {
           <Route path="/sign-up" element={<Register />} />
           <Route path="/videos/:id" element={<VideoPage />} />
           <Route path="/channel/:id" element={<ChannelPage />} />
+          <Route path="/channel/:id/videos" element={<ChannelVideos />} />
+          <Route path="/channel/:id/playlist" element={<ChannelPlaylist />} />
           <Route path="/subscribtions" element={<Subscribtions />} />
-          <Route path="/watch-later" element={<ChannelPage />} />
+          <Route path="/watch-later" element={<WatchLater />} />
           <Route path="/search-result" element={<SearchPage />} />
           <Route path="/videos-i-liked" element={<VideosILiked />} />
           <Route path="/user-channel" element={<UserChannel />} />

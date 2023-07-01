@@ -37,13 +37,13 @@ const RelatedVideo = () => {
                 </Link>
               </div>
 
-              <div className="d-flex flex-column w-100 w-lg-50  justify-content-center ">
+              <div className="d-flex flex-column w-100 w-lg-50  justify-content-start ">
                 <h5 className="fw-bold fs-5">{video?.snippet?.title}</h5>
                 <p className="fw-bold fs-6 mb-0">
                   {video?.snippet?.channelTitle}
                 </p>
                 <p className="text-muted fs-6">
-                  {video?.snippet?.publishTime}.
+                  {new Date(video?.snippet?.publishedAt).toLocaleDateString()}
                   <span className="mx-1">Thousand Views 28</span>
                 </p>
               </div>

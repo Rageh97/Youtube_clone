@@ -9,8 +9,8 @@ export const fetchRelatedVideos = createAsyncThunk(
       {
         params: {
           part: "snippet",
-          key: "AIzaSyDjsSFMAXVvdT2TNej-XQAHOB6IzlwM3PQ",
-          id: id,
+          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          relatedToVideoId: id,
           type: "video",
           maxResults: 10,
         },
@@ -37,10 +37,10 @@ const relatedVideosSlice = createSlice({
         state.status = "succeded";
         state.relatedVideo = action.payload;
       })
-      .addCase(fetchRelatedVideos.rejected, (state) => {
-        state.error = action.error.message;
-        state.status = "failed";
-      });
+      // .addCase(fetchRelatedVideos.rejected, (state,action) => {
+      //   state.error = action.error.message;
+      //   state.status = "failed";
+      // });
   },
 });
 export default relatedVideosSlice.reducer;
