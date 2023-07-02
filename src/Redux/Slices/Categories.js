@@ -19,7 +19,7 @@ export const fetchCategories = createAsyncThunk(
           part: "snippet",
           regionCode: "US",
 
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
         },
       }
     );
@@ -39,7 +39,7 @@ export const fetchVideoByCategory = createAsyncThunk(
           q: name,
           type:"video",
           maxResults: 10,
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
         },
       }
     );

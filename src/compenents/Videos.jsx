@@ -25,16 +25,15 @@ const VideoList = () => {
   }, []);
 
   const handleCategoryClick = (name) => {
-    dispatch(fetchVideoByCategory(name))
-    
-  }
+    dispatch(fetchVideoByCategory(name));
+  };
   return (
     <>
       <Row style={{ marginTop: "70px" }}>
         <Col className=" p-3  mb-3 ">
           {categories?.slice(0, 8).map((category, index) => (
             <Badge
-            key={index}
+              key={index}
               onClick={() => handleCategoryClick(category.snippet.title)}
               className="p-2 me-3"
               pill
@@ -43,40 +42,20 @@ const VideoList = () => {
               {category?.snippet?.title}
             </Badge>
           ))}
-          {/* <Badge className="p-2 me-3" pill bg="dark">
-            videos
-          </Badge>
-          <Badge className="p-2 me-3" pill bg="primary">
-            New
-          </Badge>
-          <Badge className="p-2 me-3" pill bg="danger">
-            suggestion
-          </Badge>
-          <Badge className="p-2 me-3" pill bg="dark">
-            Trending
-          </Badge>
-          <Badge className="p-2 me-3" pill bg="dark">
-            Next
-          </Badge>
-          <Badge className="p-2 me-3" pill bg="dark">
-            Primary
-          </Badge> */}
         </Col>
       </Row>
       <Row className="d-flex ">
-      {categoryVideos && categoryVideos.length > 0 ? (
-          categoryVideos.map((video , index) => (
-            <VideoCard key={index} video={video} />
-          ))
-        ) : (
-          videos && (
-            <>
-              {videos.map((video, index) => (
-                <VideoCard key={index} video={video} />
-              ))}
-            </>
-          )
-        )}
+        {categoryVideos && categoryVideos.length > 0
+          ? categoryVideos.map((video, index) => (
+              <VideoCard key={index} video={video} />
+            ))
+          : videos && (
+              <>
+                {videos.map((video, index) => (
+                  <VideoCard key={index} video={video} />
+                ))}
+              </>
+            )}
       </Row>
     </>
   );

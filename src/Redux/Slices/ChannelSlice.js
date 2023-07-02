@@ -37,7 +37,7 @@ export const fetchChannelById = createAsyncThunk(
       {
         params: {
           part: "snippet,brandingSettings, statistics",
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
           id: id,
         },
       }
@@ -56,7 +56,7 @@ export const fetchVideosByChannel = createAsyncThunk(
       {
         params: {
           part: "snippet",
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
           id: id,
 
           type: "video",

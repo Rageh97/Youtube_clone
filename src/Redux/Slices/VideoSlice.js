@@ -17,7 +17,7 @@ export const fetchVideos = createAsyncThunk("videos/fetchVideos", async () => {
         part: "snippet, statistics",
         chart: "mostPopular",
         maxResults: 10,
-        key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+        key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
       },
     }
   );
@@ -33,7 +33,7 @@ export const fetchVideoById = createAsyncThunk(
         params: {
           part: "snippet,statistics",
           id: id,
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
         },
       }
     );

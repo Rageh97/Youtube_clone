@@ -13,20 +13,26 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 import { GrChannel } from "react-icons/gr";
 import { FiSettings } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@mui/material";
-
+import { fetchSearchVideos } from "../Redux/Slices/SearchSlice";
+import { useDispatch } from "react-redux";
 function Header() {
   const [showInput, setShowInput] = useState(false);
   const [show, setShow] = useState(false);
-
+  const [search, setSearch] = useState("");
+  console.log(search);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const dispatch = useDispatch();
+  const navigat = useNavigate();
   const handleSearchClick = () => {
     setShowInput(!showInput);
   };
-
+  const handleSearch = (name) => {
+    dispatch(fetchSearchVideos(name));
+    navigat("/search-result");
+  };
   return (
     <>
       <Container fluid>
@@ -47,8 +53,12 @@ function Header() {
                   className="form-control header-search rounded-5 border border-2"
                   type="search"
                   placeholder="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
-                <Button variant="dark">Search</Button>
+                <Button onClick={() => handleSearch(search)} variant="dark">
+                  Search
+                </Button>
               </div>
             )}
           </Col>
@@ -58,8 +68,10 @@ function Header() {
               className="form-control header-search rounded-5 border border-2"
               type="search"
               placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <Button variant="dark">Search</Button>
+            <Button onClick={() => handleSearch(search)} variant="dark">Search</Button>
           </Col>
           {/* the part of profile and notification */}
           <Col
@@ -93,9 +105,22 @@ function Header() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <ul>
-                  <Link className="text-dark" to={'/user-channel'}><li className="mb-3 p-2"> <GrChannel className="fs-2 mx-2"/> Your channel</li></Link>
-                  <Link className="text-dark" to={'/setting'}><li className="mb-3 p-2"> <FiSettings className="fs-2 mx-2"/> Settings</li></Link>
-                  <li className="mb-3 p-2"> <BiLogOut className="fs-2 mx-2"/> logout</li>
+                  <Link className="text-dark" to={"/user-channel"}>
+                    <li className="mb-3 p-2">
+                      {" "}
+                      <GrChannel className="fs-2 mx-2" /> Your channel
+                    </li>
+                  </Link>
+                  <Link className="text-dark" to={"/setting"}>
+                    <li className="mb-3 p-2">
+                      {" "}
+                      <FiSettings className="fs-2 mx-2" /> Settings
+                    </li>
+                  </Link>
+                  <li className="mb-3 p-2">
+                    {" "}
+                    <BiLogOut className="fs-2 mx-2" /> logout
+                  </li>
                 </ul>
               </Offcanvas.Body>
             </Offcanvas>
