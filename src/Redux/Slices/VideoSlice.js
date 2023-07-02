@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { Key } from "../../Utils/ApiKey";
 const initialState = {
   videos: [],
 
@@ -17,7 +17,7 @@ export const fetchVideos = createAsyncThunk("videos/fetchVideos", async () => {
         part: "snippet, statistics",
         chart: "mostPopular",
         maxResults: 10,
-        key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
+        key: Key,
       },
     }
   );
@@ -33,7 +33,7 @@ export const fetchVideoById = createAsyncThunk(
         params: {
           part: "snippet,statistics",
           id: id,
-          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
+          key: Key,
         },
       }
     );

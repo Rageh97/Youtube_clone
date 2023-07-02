@@ -15,22 +15,27 @@ import Setting from "./pages/Setting";
 import ChannelVideos from "./pages/ChannelVideos";
 import ChannelPlaylist from "./pages/ChannelPlaylist";
 import WatchLater from "./pages/WatchLater";
-
+import PlaylistItem from "./pages/PlaylistItem";
+import ChannelRoutes from "./compenents/ChannelRoutes";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Header />
-        
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<Login />} />
           <Route path="/sign-up" element={<Register />} />
           <Route path="/videos/:id" element={<VideoPage />} />
-          <Route path="/channel/:id" element={<ChannelPage />} />
+          {/* <Route path="/channel/:id" element={<ChannelPage />} />
           <Route path="/channel/:id/videos" element={<ChannelVideos />} />
-          <Route path="/channel/:id/playlist" element={<ChannelPlaylist />} />
+          <Route path="/channel/:id/playlists" element={<ChannelPlaylist />} />
+          <Route path="/channel/:id/playlists/:id" element={<PlaylistItem />} /> */}
+
+          <Route path="/channel/:id/*" element={<ChannelRoutes />} />
+
           <Route path="/subscribtions" element={<Subscribtions />} />
           <Route path="/watch-later" element={<WatchLater />} />
           <Route path="/search-result" element={<SearchPage />} />

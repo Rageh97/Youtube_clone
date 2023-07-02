@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { Key } from "../../Utils/ApiKey";
 const initialState = {
   channelsInfo: [],
 
   channel: null,
-  videos: [],
+
   status: "idle",
   error: null,
 };
@@ -20,7 +20,7 @@ export const fetchChannels = createAsyncThunk(
         params: {
           part: "snippet",
           forUsername: category,
-          key: "AIzaSyBc91am_Bx5R9ngk4nGqFm2xqCZkvvif2A",
+          key: Key,
         },
       }
     );
@@ -37,7 +37,7 @@ export const fetchChannelById = createAsyncThunk(
       {
         params: {
           part: "snippet,brandingSettings, statistics",
-          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
+          key: Key,
           id: id,
         },
       }
@@ -47,25 +47,6 @@ export const fetchChannelById = createAsyncThunk(
   }
 );
 // fetch videos of the channel
-
-export const fetchVideosByChannel = createAsyncThunk(
-  "channel/fetchVideosByChannel",
-  async (id) => {
-    const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/search",
-      {
-        params: {
-          part: "snippet",
-          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
-          id: id,
-
-          type: "video",
-        },
-      }
-    );
-    return response.data.items;
-  }
-);
 
 const channelSlice = createSlice({
   name: "channels",
@@ -87,14 +68,10 @@ const channelSlice = createSlice({
       .addCase(fetchChannelById.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
-      .addCase(fetchVideosByChannel.fulfilled, (state, action) => {
-        state.videos = action.payload;
       });
   },
 });
 export default channelSlice.reducer;
 export const getChannel = (state) => state.channels.channel;
-export const getVideosOfChannel = (state) => state.channels.videos;
 export const getChannels = (state) => state.channels.channelsInfo;
 export const getCategories = (state) => state.channels.categories;

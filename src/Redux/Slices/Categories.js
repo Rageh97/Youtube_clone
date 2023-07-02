@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { Key } from "../../Utils/ApiKey";
 const initialState = {
   categories: [],
   categoryVideos: [],
@@ -19,7 +19,7 @@ export const fetchCategories = createAsyncThunk(
           part: "snippet",
           regionCode: "US",
 
-          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
+          key: Key,
         },
       }
     );
@@ -39,7 +39,7 @@ export const fetchVideoByCategory = createAsyncThunk(
           q: name,
           type:"video",
           maxResults: 10,
-          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
+          key: Key,
         },
       }
     );

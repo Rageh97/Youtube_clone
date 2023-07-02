@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { Key } from "../../Utils/ApiKey";
 export const fetchRelatedVideos = createAsyncThunk(
   "videos/relatedVideos",
   async (id) => {
@@ -9,7 +9,7 @@ export const fetchRelatedVideos = createAsyncThunk(
       {
         params: {
           part: "snippet",
-          key: "AIzaSyBOGCoJqODnVaNUpBTYulxBq-jJcBWuYz4",
+          key: Key,
           relatedToVideoId: id,
           type: "video",
           maxResults: 10,
