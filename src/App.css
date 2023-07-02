@@ -20,6 +20,7 @@
   bottom: 0;
   height: 92vh;
   overflow: scroll;
+  width: 200px;
 }
 
 .sidebar ul {

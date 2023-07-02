@@ -21,7 +21,7 @@ function Header() {
   const [showInput, setShowInput] = useState(false);
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
-  console.log(search);
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();

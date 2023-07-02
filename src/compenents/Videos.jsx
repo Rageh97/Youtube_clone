@@ -38,7 +38,7 @@ const VideoList = () => {
             <Badge
               key={index}
               onClick={() => handleCategoryClick(category.snippet.title)}
-              className="p-2 me-3"
+              className="p-2 me-3 mt-2"
               pill
               bg="danger"
             >

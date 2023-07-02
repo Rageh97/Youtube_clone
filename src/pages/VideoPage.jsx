@@ -21,6 +21,8 @@ import {
   addWatchLaterVideo,
   removeWatchLaterVideo,
 } from "../Redux/Slices/WatchLater";
+import { addSubscribtions, removeSubscribtions } from "../Redux/Slices/Subscribtion";
+
 const VideoPage = () => {
   const currentVideo = useSelector(singleVideo);
   const channel = useSelector(getChannel);
@@ -28,11 +30,15 @@ const VideoPage = () => {
   const { id } = useParams();
   const likedVideos = useSelector((state) => state.likedVideos);
   const watchLater = useSelector((state) => state.watchLater);
+  const subscribes = useSelector((state) => state.subscribtions);
   const isSaved =
     currentVideo && watchLater.some((video) => video.id === currentVideo.id);
   const isLiked =
     currentVideo &&
     likedVideos.some((likedVideo) => likedVideo.id === currentVideo.id);
+  const isSubscribe =
+    currentVideo &&
+    subscribes.some((subscribe) => subscribe.id === currentVideo.id);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -63,6 +69,18 @@ const VideoPage = () => {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
+  const addSubscribe = () => {
+    dispatch(addSubscribtions(currentVideo));
+    toast.success("You are subscribed !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  const removeSubscribe = () => {
+    dispatch(removeSubscribtions(currentVideo.id));
+    toast.error("You are not subscribed !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
   const likeButtonClassName = isLiked
     ? "fs-3 chip-action text-light p-1 bg-dark"
     : "fs-3 chip-action";
@@ -118,7 +136,13 @@ const VideoPage = () => {
                         </span>
                       </div>
                     </div>
-                    <Button variant="dark">Subscribe</Button>
+                    {/* <Button variant="dark">Subscribe</Button> */}
+                    {isSubscribe ? (<>
+                      <Button onClick={removeSubscribe} variant="danger">Subscribed</Button>
+                    </>) : (<>
+                      <Button onClick={addSubscribe} variant="dark">Subscribe</Button>
+                    
+                    </>)}
                   </Col>
                   <Col
                     xs={12}

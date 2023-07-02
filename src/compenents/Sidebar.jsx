@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
-import { categories } from "../Utils/Constant";
 import { AiFillHome, AiFillLike } from "react-icons/ai";
 import { MdSubscriptions } from "react-icons/md";
 import { BsFillStopwatchFill } from "react-icons/bs";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
-  const category = categories.map((category, index) => {
+const channels = useSelector((state) => state.subscribtions)
+
+
+  const channel = channels.map((channel, index) => {
     return (
       <>
-        <div
+       <Link className="text-dark text-truncate w-100" to={`/channel/${channel?.snippet?.channelId}`}>
+       
+       <div
           key={index}
-          className="d-flex align-items-center gap-2 mb-3 p-2 rounded sidebar-item"
+          className="d-flex w-100 align-items-center gap-2 mb-3 p-2 rounded sidebar-item"
         >
           <Avatar
             sx={{ width: 24, height: 24 }}
             alt="Remy Sharp"
-            src="https://images.pexels.com/photos/130880/pexels-photo-130880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src={channel?.snippet?.thumbnails?.default?.url}
           />
-          <li>{category.name}</li>
+          <li className="w-100 text-truncate">{channel?.snippet?.channelTitle}</li>
         </div>
+       </Link>
       </>
     );
   });
@@ -57,9 +63,9 @@ function Sidebar() {
         </Link>
         <hr />
 
-        <ul>
+        <ul className="w-100">
           <h6>Channels</h6>
-          {category}
+          {channel}
           
         </ul>
       </div>

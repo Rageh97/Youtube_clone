@@ -13,7 +13,7 @@ const Home = () => {
       
       <Container  fluid>
         <Row>
-          <Col className="d-none d-lg-block" md={2} lg={2} xl={2} xxl={2}>
+          <Col className="d-none d-lg-block"  md={2} lg={2} xl={2} xxl={2}>
           <Sidebar />
           </Col>
 

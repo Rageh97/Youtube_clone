@@ -54,7 +54,7 @@ const ChannelVideos = () => {
                   alt="Channel Profile Picture"
                 />
 
-                <div className="mx-2 d-xs-flex align-items-center justify-content-between">
+                <div className="mx-2 d-block d-xs-flex align-items-center justify-content-between">
                   <h4 className="fw-bold">{channel?.snippet?.title}</h4>
                   <span>
                     {formatNumber(channel?.statistics?.subscriberCount)}{" "}
