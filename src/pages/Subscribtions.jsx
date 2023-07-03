@@ -17,28 +17,21 @@ const Subscribtions = () => {
         </Col>
 
         <Col xs={12} md={12} lg={10} xl={10} xxl={10}>
-          <Row className="d-flex">
-            {subscribtionVideos?.map((video) => (
-              <Col
-                className="mb-4"
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-                xl={12}
-                xxl={12}
-              >
-                <div className="w-100 h-100 d-flex shadow-sm">
-                  <div style={{ width: "30%" }} className="h-100">
+          <Row >
+            {subscribtionVideos?.map((video, index) => (
+             
+                <Row key={index} className="w-100 h-100 d-block d-md-flex mb-4">
+                  <div className="h-100 col-12 col-md-4">
                     <Link className="w-100 h-100" to={`/videos/${video?.id}`}>
                       <Card.Img
-                        className="w-100 h-100 rounded"
+                      style={{height:"250px", objectFit:"cover"}}
+                        className="w-100 rounded"
                         variant="top"
                         src={video?.snippet?.thumbnails?.default?.url}
                       />
                     </Link>
                   </div>
-                  <div style={{ width: "70%" }} className="h-100">
+                  <div  className="h-100 col-12 col-md-8">
                     <Card.Body className="d-flex w-100 h-100 mx-2">
                       <div>
                         <Card.Title className="fw-bold fs-5">
@@ -52,7 +45,7 @@ const Subscribtions = () => {
                           </span>
                         </Card.Text>
                         <div className="d-flex gap-2 align-items-center mb-2">
-                          <Link to={`/channel/${video?.snippet?.channelId}`}>
+                          <Link to={`/channel/${video?.snippet?.channelId ? video?.snippet?.channelId : video?.id}`}>
                             <Card.Text className="fw-bold fs-6 mb-0 d-flex align-items-center ">
                               <Avatar
                                 alt="Travis Howard"
@@ -62,7 +55,7 @@ const Subscribtions = () => {
                               />
 
                               <span className="mx-2">
-                                {video?.snippet?.channelTitle}
+                              {video?.snippet?.channelTitle ? video?.snippet?.channelTitle : video?.snippet?.title}
                               </span>
                             </Card.Text>
                           </Link>
@@ -70,8 +63,8 @@ const Subscribtions = () => {
                       </div>
                     </Card.Body>
                   </div>
-                </div>
-              </Col>
+                </Row>
+             
             ))}
           </Row>
         </Col>

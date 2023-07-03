@@ -5,18 +5,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VideoPage from "./pages/VideoPage";
 import Login from "./pages/Login";
 import Header from "./compenents/Header";
-import ChannelPage from "./pages/ChannelPage";
 import Subscribtions from "./pages/Subscribtions";
 import SearchPage from "./pages/SearchPage";
 import VideosILiked from "./pages/VideosILiked";
 import Register from "./pages/Register";
 import UserChannel from "./pages/UserChannel";
 import Setting from "./pages/Setting";
-import ChannelVideos from "./pages/ChannelVideos";
-import ChannelPlaylist from "./pages/ChannelPlaylist";
 import WatchLater from "./pages/WatchLater";
-import PlaylistItem from "./pages/PlaylistItem";
 import ChannelRoutes from "./compenents/ChannelRoutes";
+import MobileFooter from "./compenents/MobileFooter";
 
 function App() {
   return (
@@ -29,10 +26,6 @@ function App() {
           <Route path="/sign-in" element={<Login />} />
           <Route path="/sign-up" element={<Register />} />
           <Route path="/videos/:id" element={<VideoPage />} />
-          {/* <Route path="/channel/:id" element={<ChannelPage />} />
-          <Route path="/channel/:id/videos" element={<ChannelVideos />} />
-          <Route path="/channel/:id/playlists" element={<ChannelPlaylist />} />
-          <Route path="/channel/:id/playlists/:id" element={<PlaylistItem />} /> */}
 
           <Route path="/channel/:id/*" element={<ChannelRoutes />} />
 
@@ -43,6 +36,7 @@ function App() {
           <Route path="/user-channel" element={<UserChannel />} />
           <Route path="/setting" element={<Setting />} />
         </Routes>
+        <MobileFooter/>
       </BrowserRouter>
     </>
   );

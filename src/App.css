@@ -4,13 +4,13 @@
   box-sizing: border-box;
 }
 .header-search {
-  width: 50%;
-  transition: 0.5s;
-}
-.header-search:focus {
   width: 100%;
   transition: 0.5s;
 }
+/* .header-search:focus {
+  width: 100%;
+  transition: 0.5s;
+} */
 .sidebar {
   padding: 20px;
   background-color: #ffffff;
@@ -63,6 +63,7 @@ li:hover {
   bottom: -22px;
   left: 0;
   right: 0;
+  background-color: #ffffff;
 }
 .login-card {
   width: 430px;
@@ -71,14 +72,13 @@ li:hover {
   padding: 50px 25px 25px 25px;
   border-radius: 40px;
   margin-top: 50px;
-  
-  box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
 
+  box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
 }
 .gap-30 {
   gap: 30px;
 }
-.neumer-input{
+.neumer-input {
   border: none;
   outline: none;
   background: none;
@@ -86,12 +86,15 @@ li:hover {
   color: #555;
   padding: 15px 8px 15px 5px;
 }
-.email, .password, .name, .confirm{
+.email,
+.password,
+.name,
+.confirm {
   margin-bottom: 30px;
   border-radius: 25px;
   box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
 }
-.submit-btn{
+.submit-btn {
   outline: none;
   border: none;
   cursor: pointer;
@@ -103,10 +106,15 @@ li:hover {
   color: #fff;
   text-align: center;
   background-color: #02c8db;
-  transition: all .5s;
+  transition: all 0.5s;
   box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #fff;
 }
-.submit-btn:hover{
+.submit-btn:hover {
   background-color: #50e5b9;
+}
 
+.active {
+  color: rgb(162, 7, 7);
+  
+  
 }

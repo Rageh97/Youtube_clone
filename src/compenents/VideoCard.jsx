@@ -19,7 +19,7 @@ const VideoCard = ({ video }) => {
             <div style={{ width: "15%" }} className="me-2">
               <Avatar
                 alt="Travis Howard"
-                src={video?.snippet?.channelThumbnails?.default.url}
+                src={video?.snippet?.thumbnails?.default?.url}
               />
             </div>
             <div style={{ width: "85%" }}>

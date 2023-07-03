@@ -10,6 +10,7 @@ import SearchReduser from "./Slices/SearchSlice";
 import ChannelVideosReducer from "./Slices/ChannelVideosSlice";
 import ChannelPlaylistReducer from "./Slices/ChannelPlaylistSlice";
 import SubscribtionReducer from "./Slices/Subscribtion";
+import commentReducer from "./Slices/CommentSlice";
 const store = configureStore({
   reducer: {
     videos: videosReducer,
@@ -20,9 +21,10 @@ const store = configureStore({
     categories: CategoriesReducer,
     search: SearchReduser,
     channelvideos: ChannelVideosReducer,
-    channelplaylists:ChannelPlaylistReducer,
+    channelplaylists: ChannelPlaylistReducer,
     upload: uploadReducer,
-    subscribtions:SubscribtionReducer
+    subscribtions: SubscribtionReducer,
+    comment: commentReducer,
   },
 });
 

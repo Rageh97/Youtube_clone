@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Accordion, Button, Col, Container, Row } from "react-bootstrap";
 import { Avatar, Chip, Stack } from "@mui/material";
 import Comments from "../compenents/Comments";
@@ -21,7 +21,11 @@ import {
   addWatchLaterVideo,
   removeWatchLaterVideo,
 } from "../Redux/Slices/WatchLater";
-import { addSubscribtions, removeSubscribtions } from "../Redux/Slices/Subscribtion";
+import {
+  addSubscribtions,
+  removeSubscribtions,
+} from "../Redux/Slices/Subscribtion";
+import { fetchComments, getComments } from "../Redux/Slices/CommentSlice";
 
 const VideoPage = () => {
   const currentVideo = useSelector(singleVideo);
@@ -30,20 +34,22 @@ const VideoPage = () => {
   const { id } = useParams();
   const likedVideos = useSelector((state) => state.likedVideos);
   const watchLater = useSelector((state) => state.watchLater);
-  const subscribes = useSelector((state) => state.subscribtions);
+  const comments = useSelector(getComments);
   const isSaved =
-    currentVideo && watchLater.some((video) => video.id === currentVideo.id);
+  currentVideo && watchLater.some((video) => video.id === currentVideo.id);
   const isLiked =
-    currentVideo &&
-    likedVideos.some((likedVideo) => likedVideo.id === currentVideo.id);
+  currentVideo &&
+  likedVideos.some((likedVideo) => likedVideo.id === currentVideo.id);
+  const subscribes = useSelector((state) => state.subscribtions);
   const isSubscribe =
     currentVideo &&
-    subscribes.some((subscribe) => subscribe.id === currentVideo.id);
+    subscribes.some((subscribe) => subscribe?.snippet?.channelTitle === currentVideo?.snippet?.channelTitle);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchVideoById(id));
     dispatch(fetchChannelById(id));
+    dispatch(fetchVideoById(id));
+    dispatch(fetchComments(id));
   }, [dispatch, id]);
   const handleWatchLaterVideo = () => {
     dispatch(addWatchLaterVideo(currentVideo));
@@ -74,13 +80,13 @@ const VideoPage = () => {
     toast.success("You are subscribed !", {
       position: toast.POSITION.TOP_RIGHT,
     });
-  }
+  };
   const removeSubscribe = () => {
     dispatch(removeSubscribtions(currentVideo.id));
     toast.error("You are not subscribed !", {
       position: toast.POSITION.TOP_RIGHT,
     });
-  }
+  };
   const likeButtonClassName = isLiked
     ? "fs-3 chip-action text-light p-1 bg-dark"
     : "fs-3 chip-action";
@@ -125,9 +131,11 @@ const VideoPage = () => {
                         src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                       />
                       <div className="d-flex flex-column">
-                        <p className="mb-0">
-                          {currentVideo?.snippet?.channelTitle}
-                        </p>
+                        <Link to={`/channel/${currentVideo?.snippet?.channelId}`} className="text-dark ">
+                          <h6 className="mb-0 fw-bold">
+                            {currentVideo?.snippet?.channelTitle}
+                          </h6>
+                        </Link>
                         <span className="mb-0">
                           {" "}
                           {formatNumber(
@@ -137,12 +145,19 @@ const VideoPage = () => {
                       </div>
                     </div>
                     {/* <Button variant="dark">Subscribe</Button> */}
-                    {isSubscribe ? (<>
-                      <Button onClick={removeSubscribe} variant="danger">Subscribed</Button>
-                    </>) : (<>
-                      <Button onClick={addSubscribe} variant="dark">Subscribe</Button>
-                    
-                    </>)}
+                    {isSubscribe ? (
+                      <>
+                        <Button onClick={removeSubscribe} variant="danger">
+                          Subscribed
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button onClick={addSubscribe} variant="dark">
+                          Subscribe
+                        </Button>
+                      </>
+                    )}
                   </Col>
                   <Col
                     xs={12}
@@ -204,33 +219,35 @@ const VideoPage = () => {
                         }
                         label="dislike"
                       />
-                     {isSaved ? (<>
-                     
-                      <Chip
-                        avatar={
-                          <Avatar>
-                            <BiSave
-                              onClick={handleRemoveWatchLaterVideo}
-                              className={saveButtonClassName}
-                            />
-                          </Avatar>
-                        }
-                        label="Save"
-                      />
-                     </>) :(<>
-                     
-                      <Chip
-                        avatar={
-                          <Avatar>
-                            <BiSave
-                              onClick={handleWatchLaterVideo}
-                              className={saveButtonClassName}
-                            />
-                          </Avatar>
-                        }
-                        label="Save"
-                      />
-                     </>)}
+                      {isSaved ? (
+                        <>
+                          <Chip
+                            avatar={
+                              <Avatar>
+                                <BiSave
+                                  onClick={handleRemoveWatchLaterVideo}
+                                  className={saveButtonClassName}
+                                />
+                              </Avatar>
+                            }
+                            label="Save"
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <Chip
+                            avatar={
+                              <Avatar>
+                                <BiSave
+                                  onClick={handleWatchLaterVideo}
+                                  className={saveButtonClassName}
+                                />
+                              </Avatar>
+                            }
+                            label="Save"
+                          />
+                        </>
+                      )}
                     </Stack>
                   </Col>
                 </Row>
@@ -266,7 +283,24 @@ const VideoPage = () => {
 
                 {/* here the part of comments */}
                 <Row>
-                  <Comments />
+                  <Col  className="mb-3">
+                    <Accordion defaultActiveKey="0">
+                      <Accordion.Item eventKey="0">
+                        <Accordion.Header>
+                          <h6>see comments</h6>
+                        </Accordion.Header>
+                        <Accordion.Body>
+                          {comments.map((comment, index) => {
+                            return (
+                              <>
+                                <Comments key={index} comment={comment} />
+                              </>
+                            );
+                          })}
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                  </Col>
                 </Row>
               </Col>
             </>

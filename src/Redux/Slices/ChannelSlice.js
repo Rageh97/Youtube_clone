@@ -13,13 +13,13 @@ const initialState = {
 // fetch Channels
 export const fetchChannels = createAsyncThunk(
   "channels/fetchchannels",
-  async (category) => {
+  async () => {
     const response = await axios.get(
       "https://www.googleapis.com/youtube/v3/channels",
       {
         params: {
           part: "snippet",
-          forUsername: category,
+
           key: Key,
         },
       }

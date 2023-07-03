@@ -5,19 +5,36 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannel, fetchChannelById } from "../Redux/Slices/ChannelSlice";
 import { formatNumber } from "../Utils/FormatNumber";
-
+import { addSubscribtions, removeSubscribtions } from "../Redux/Slices/Subscribtion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ChannelPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const channel = useSelector(getChannel);
-
+  const subscribes = useSelector((state) => state.subscribtions);
+  const isSubscribe =
+  channel &&
+    subscribes.some((subscribe) =>  subscribe?.snippet?.channelTitle  === channel?.snippet?.title);
   useEffect(() => {
     dispatch(fetchChannelById(id));
   }, [id, dispatch]);
-
+  const addSubscribe = () => {
+    dispatch(addSubscribtions(channel));
+    toast.success("You are subscribed !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  const removeSubscribe = () => {
+    dispatch(removeSubscribtions(channel.id));
+    toast.error("You are not subscribed !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
   return (
     <>
       <Container fluid style={{ marginTop: "100px" }}>
+        <ToastContainer/>
         <Row>
           <Col className="d-none d-lg-block" md={2} lg={2} xl={2} xxl={2}>
             <Sidebar />
@@ -50,9 +67,22 @@ const ChannelPage = () => {
                     subscribers {channel?.statistics?.videoCount} video
                   </span>
 
-                  <Button className="mx-0 mx-sm-5 " variant="dark">
+                  {/* <Button className="mx-0 mx-sm-5 " variant="dark">
                     Subscribe
-                  </Button>
+                  </Button> */}
+                    {isSubscribe ? (
+                      <>
+                        <Button className="mx-0 mx-sm-5" onClick={removeSubscribe} variant="danger">
+                          Subscribed
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button className="mx-0 mx-sm-5" onClick={addSubscribe} variant="dark">
+                          Subscribe
+                        </Button>
+                      </>
+                    )}
                 </div>
 
                 {/* <div>

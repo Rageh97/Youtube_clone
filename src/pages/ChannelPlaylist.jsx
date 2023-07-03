@@ -8,12 +8,15 @@ import {
   getPlaylistItem,
   fetchPlaylistItem,
 } from "../Redux/Slices/ChannelPlaylistSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { fetchChannelById, getChannel } from "../Redux/Slices/ChannelSlice";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Sidebar from "../compenents/Sidebar";
 import { formatNumber } from "../Utils/FormatNumber";
 import VideoCard from "../compenents/VideoCard";
 import { Avatar } from "@mui/material";
+import { addSubscribtions, removeSubscribtions } from "../Redux/Slices/Subscribtion";
 const ChannelPlaylist = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -23,10 +26,26 @@ const ChannelPlaylist = () => {
     dispatch(fetchChannelById(id));
     dispatch(fetchPlaylistsByChannel(id));
   }, [id, dispatch]);
-
+  const subscribes = useSelector((state) => state.subscribtions);
+  const isSubscribe =
+  channel &&
+    subscribes.some((subscribe) => subscribe?.snippet?.channelTitle  === channel?.snippet?.title);
+    const addSubscribe = () => {
+      dispatch(addSubscribtions(channel));
+      toast.success("You are subscribed !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    };
+    const removeSubscribe = () => {
+      dispatch(removeSubscribtions(channel.id));
+      toast.error("You are not subscribed !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    };
   return (
     <>
       <Container fluid style={{ marginTop: "100px" }}>
+        <ToastContainer/>
         <Row>
           <Col className="d-none d-lg-block" md={2} lg={2} xl={2} xxl={2}>
             <Sidebar />
@@ -61,9 +80,22 @@ const ChannelPlaylist = () => {
                     subscribers {channel?.statistics?.videoCount} video
                   </span>
 
-                  <Button className="mx-0 mx-sm-5 " variant="dark">
+                  {/* <Button className="mx-0 mx-sm-5 " variant="dark">
                     Subscribe
-                  </Button>
+                  </Button> */}
+                  {isSubscribe ? (
+                      <>
+                        <Button className="mx-0 mx-sm-5" onClick={removeSubscribe} variant="danger">
+                          Subscribed
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button className="mx-0 mx-sm-5" onClick={addSubscribe} variant="dark">
+                          Subscribe
+                        </Button>
+                      </>
+                    )}
                 </div>
 
                 {/* <div>
