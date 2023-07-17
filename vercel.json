@@ -1,8 +1,0 @@
-{
-  "build": {
-    "env": {
-      "CI": "1"
-    },
-    "npmInstall": true
-  }
-}
