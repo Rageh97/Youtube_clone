@@ -10,7 +10,7 @@ import { selectVideosStatus, singleVideo } from "../Redux/Slices/VideoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideoById } from "../Redux/Slices/VideoSlice";
 import Loading from "./../Utils/Loading";
-// import RelatedVideo from "../compenents/RelatedVideo";
+import RelatedVideo from "../compenents/RelatedVideo";
 import { addLikedVideo, removeLikedVideo } from "../Redux/Slices/LikedVideos";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -383,9 +383,9 @@ const VideoPage = () => {
           )}
           {/* here the part of related videos on the other side of the page */}
 
-          {/* <Col xs={12} sm={12} md={12} lg={5} xl={5} xxl={5}>
+          <Col xs={12} sm={12} md={12} lg={5} xl={5} xxl={5}>
             <RelatedVideo />
-          </Col> */}
+          </Col>
         </Row>
       </Container>
     </>
