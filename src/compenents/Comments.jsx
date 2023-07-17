@@ -5,49 +5,12 @@ import { Accordion, Button, Col } from "react-bootstrap";
 
 
 const Comments = ({ comment }) => {
-  // const [comments, setComments] = useState([]);
-  // const [currentComment, setCurrentComment] = useState("");
-
-
-
-  // const handleAddComment = () => {
-  //   const newComment = {
-  //     username: "Night Sky",
-  //     content: currentComment,
-  //   };
-
-  //   setComments([...comments, newComment]);
-
-  //   setCurrentComment("");
-  // };
-
-  // const handleCommentChange = (event) => {
-  //   setCurrentComment(event.target.value);
-  // };
 
   return (
     <>
-      {/* <Box
-        sx={{ display: "flex", alignItems: "flex-end", marginBottom: "30px" }}
-      >
-        <Avatar
-          className="me-2"
-          alt="Travis Howard"
-          src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        />
-        <TextField
-          value={currentComment}
-          onChange={handleCommentChange}
-          id="input-with-sx"
-          label="Add a comment"
-          variant="standard"
-        />
-        <Button className="mx-3" onClick={handleAddComment}>
-          Comment
-        </Button>
-      </Box> */}
+   
 
-      <div className="d-flex align-items-center w-100">
+      <div className="d-flex align-items-center w-100 ">
         <Avatar
           className="me-2"
           alt="Travis Howard"

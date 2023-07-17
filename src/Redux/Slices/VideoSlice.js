@@ -16,7 +16,7 @@ export const fetchVideos = createAsyncThunk("videos/fetchVideos", async () => {
       params: {
         part: "snippet, statistics",
         chart: "mostPopular",
-        maxResults: 10,
+        maxResults: 20,
         key: Key,
       },
     }

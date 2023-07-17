@@ -14,7 +14,10 @@ import Setting from "./pages/Setting";
 import WatchLater from "./pages/WatchLater";
 import ChannelRoutes from "./compenents/ChannelRoutes";
 import MobileFooter from "./compenents/MobileFooter";
+import VideoUploadForm from "./pages/UploadVideo";
+import UserVideos from "./pages/UserVideos";
 
+import DislikeVideos from "./pages/DislikeVideos";
 function App() {
   return (
     <>
@@ -33,10 +36,13 @@ function App() {
           <Route path="/watch-later" element={<WatchLater />} />
           <Route path="/search-result" element={<SearchPage />} />
           <Route path="/videos-i-liked" element={<VideosILiked />} />
+          <Route path="/dislike-videos" element={<DislikeVideos />} />
           <Route path="/user-channel" element={<UserChannel />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/upload-video" element={<VideoUploadForm />} />
+          <Route path="/user-videos" element={<UserVideos />} />
         </Routes>
-        <MobileFooter/>
+        <MobileFooter />
       </BrowserRouter>
     </>
   );

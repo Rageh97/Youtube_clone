@@ -16,7 +16,10 @@ import Sidebar from "../compenents/Sidebar";
 import { formatNumber } from "../Utils/FormatNumber";
 import VideoCard from "../compenents/VideoCard";
 import { Avatar } from "@mui/material";
-import { addSubscribtions, removeSubscribtions } from "../Redux/Slices/Subscribtion";
+import {
+  addSubscriptions,
+  removeSubscriptions,
+} from "../Redux/Slices/SubscribtionVideos";
 const ChannelPlaylist = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -26,33 +29,44 @@ const ChannelPlaylist = () => {
     dispatch(fetchChannelById(id));
     dispatch(fetchPlaylistsByChannel(id));
   }, [id, dispatch]);
-  const subscribes = useSelector((state) => state.subscribtions);
-  const isSubscribe =
-  channel &&
-    subscribes.some((subscribe) => subscribe?.snippet?.channelTitle  === channel?.snippet?.title);
-    const addSubscribe = () => {
-      dispatch(addSubscribtions(channel));
-      toast.success("You are subscribed !", {
+  const subscribes = useSelector((state) => state.subscribtionVideos);
+
+  const addSubscribe = () => {
+    dispatch(addSubscriptions(channel));
+    toast.success("You are subscribed !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+ 
+  const isSubscribe = channel && subscribes.find(subscribe =>
+    subscribe?.id === channel?.id ||
+    subscribe?.snippet?.channelId === channel?.id
+  ) !== undefined;
+  
+  const removeSubscribe = () => {
+    const subscribedChannel = subscribes.find(subscribe =>
+      subscribe?.id === channel?.id ||
+      subscribe?.snippet?.channelId === channel?.id
+    );
+  
+    if (subscribedChannel) {
+      dispatch(removeSubscriptions(subscribedChannel?.id));
+      toast.error("You are not subscribed!", {
         position: toast.POSITION.TOP_RIGHT,
       });
-    };
-    const removeSubscribe = () => {
-      dispatch(removeSubscribtions(channel.id));
-      toast.error("You are not subscribed !", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    };
+    }
+  };
   return (
     <>
       <Container fluid style={{ marginTop: "100px" }}>
-        <ToastContainer/>
+        <ToastContainer />
         <Row>
           <Col className="d-none d-lg-block" md={2} lg={2} xl={2} xxl={2}>
             <Sidebar />
           </Col>
           <Col xs={12} md={12} lg={10} xl={10} xxl={10}>
             {/* Banner of the channel */}
-            <div className="mb-3" style={{ width: "100%", height: "400px" }}>
+            <div className="mb-3" style={{ width: "100%", height: "300px" }}>
               <img
                 style={{ objectFit: "cover" }}
                 className="w-100 h-100 "
@@ -80,36 +94,38 @@ const ChannelPlaylist = () => {
                     subscribers {channel?.statistics?.videoCount} video
                   </span>
 
-                  {/* <Button className="mx-0 mx-sm-5 " variant="dark">
-                    Subscribe
-                  </Button> */}
+                  
                   {isSubscribe ? (
-                      <>
-                        <Button className="mx-0 mx-sm-5" onClick={removeSubscribe} variant="danger">
-                          Subscribed
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button className="mx-0 mx-sm-5" onClick={addSubscribe} variant="dark">
-                          Subscribe
-                        </Button>
-                      </>
-                    )}
+                    <>
+                      <Button
+                        className="me-5 mx-sm-5 "
+                        onClick={removeSubscribe}
+                        variant="warning"
+                      >
+                        Subscribed
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        className="me-5 mx-sm-5 button Button"
+                        onClick={addSubscribe}
+                        variant="dark"
+                      >
+                        Subscribe
+                      </Button>
+                    </>
+                  )}
                 </div>
 
-                {/* <div>
-                <Button className="me-5" variant="dark">
-                  Subscribe
-                </Button>
-              </div> */}
+               
               </div>
             </div>
 
             {/* Links of profile videos and playlists */}
             <div className="mt-3 d-flex justify-content-center w-50 gap-5">
-              <Link to={`/channel/${id}/videos`}>Videos</Link>
-              <Link to={`/channel/${id}/playlists`}>Playlists</Link>
+              <Link className="text LINK" to={`/channel/${id}/videos`}>Videos</Link>
+              <Link className="text LINK" to={`/channel/${id}/playlists`}>Playlists</Link>
             </div>
             <hr />
 
@@ -125,8 +141,8 @@ const ChannelPlaylist = () => {
                   xl={4}
                   xxl={3}
                 >
-                  <Card className="w-100 h-100">
-                    <Link to={`/channel/${id}/playlists/${id}`}>
+                  <Card className="w-100 h-100 carddark">
+                    <Link className="LINK" to={`/channel/${id}/playlists/${playlist.id}`}>
                       <Card.Img
                         variant="top"
                         src={playlist?.snippet?.thumbnails?.default?.url}
@@ -136,26 +152,24 @@ const ChannelPlaylist = () => {
                       <div style={{ width: "15%" }} className="me-2">
                         <Avatar
                           alt="Travis Howard"
-                          src={
-                            playlist?.snippet?.channelThumbnails?.default.url
-                          }
+                          src={playlist?.snippet?.thumbnails?.default?.url}
                         />
                       </div>
                       <div style={{ width: "85%" }}>
-                        <Card.Title className="fw-bold fs-5">
+                        <Card.Title className="fw-bold fs-5 text">
                           {playlist?.snippet?.title}
                         </Card.Title>
 
                         <div className="d-flex gap-2 align-items-center mb-2">
-                          <Link to={`/channel/${playlist?.snippet?.channelId}`}>
-                            <Card.Text className="fw-bold fs-6 mb-0">
+                          <Link className="LINK" to={`/channel/${playlist?.snippet?.channelId}`}>
+                            <Card.Text className="fw-bold fs-6 mb-0 text">
                               {playlist?.snippet?.channelTitle}
                             </Card.Text>
                           </Link>
                         </div>
                         <Card.Text className="text-muted fs-6">
-                          {playlist?.snippet?.publishTime}
-                          <span className="mx-1">
+                          {playlist?.snippet?.publishedAt}
+                          <span className="mx-1 ">
                             {formatNumber(playlist?.statistics?.viewCount)}{" "}
                             Views
                           </span>

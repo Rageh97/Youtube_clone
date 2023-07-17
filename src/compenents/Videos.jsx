@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
-import { Badge, Card, Col, Row } from "react-bootstrap";
+import { Badge, Button, Card, Col, Row } from "react-bootstrap";
 import { selectVideosStatus, selectVideos } from "../Redux/Slices/VideoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideos } from "../Redux/Slices/VideoSlice";
@@ -36,20 +36,21 @@ const VideoList = () => {
       <Row style={{ marginTop: "70px" }}>
         <Col className=" p-3  mb-3 ">
           {categories?.slice(0, 8).map((category, index) => (
-            <Badge
+            <Button
             style={{cursor:"pointer"}}
               key={index}
               onClick={() => handleCategoryClick(category.snippet.title)}
-              className="p-2 me-3 mt-2"
-              pill
-              bg="danger"
+              className="p-2 me-3 mt-2  Button Button-Catg text"
+            
+              
             >
               {category?.snippet?.title}
-            </Badge>
+            </Button>
           ))}
         </Col>
       </Row>
       <Row className="d-flex ">
+        {status === "loading" && <Loading/>}
         {categoryVideos && categoryVideos.length > 0
           ? categoryVideos.map((video, index) => (
               <Col
@@ -62,7 +63,7 @@ const VideoList = () => {
                 xl={4}
                 xxl={3}
               >
-                <Card className="w-100 h-100">
+                <Card className="w-100 h-100 carddark">
                   <Link to={`/videos/${video?.id?.videoId}`}>
                     <Card.Img
                       variant="top"
@@ -73,24 +74,24 @@ const VideoList = () => {
                     <div style={{ width: "15%" }} className="me-2">
                       <Avatar
                         alt="Travis Howard"
-                        src={video?.snippet?.channelThumbnails?.default.url}
+                        src={video?.snippet?.thumbnails?.default?.url}
                       />
                     </div>
                     <div style={{ width: "85%" }}>
-                      <Card.Title className="fw-bold fs-5">
+                      <Card.Title className="fw-bold fs-5 text">
                         {video?.snippet?.title}
                       </Card.Title>
 
                       <div className="d-flex gap-2 align-items-center mb-2">
-                        <Link to={`/channel/${video?.snippet?.channelId}`}>
-                          <Card.Text className="fw-bold fs-6 mb-0">
+                        <Link className="LINK" to={`/channel/${video?.snippet?.channelId}`}>
+                          <Card.Text className="fw-bold fs-6 mb-0  text">
                             {video?.snippet?.channelTitle}
                           </Card.Text>
                         </Link>
                       </div>
-                      <Card.Text className="text-muted fs-6">
+                      <Card.Text className="text-muted fs-6 channeltitle">
                         {video?.snippet?.publishTime}
-                        <span className="mx-1">
+                        <span className="mx-1 channeltitle">
                           {formatNumber(video?.statistics?.viewCount)} Views
                         </span>
                       </Card.Text>
